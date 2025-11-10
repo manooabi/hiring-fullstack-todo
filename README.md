@@ -1,153 +1,96 @@
-# 📝 Full Stack Take-home Assignment – TODO App
+# Full-Stack TODO App
 
-## 🧠 Objective
-
-This exercise is intended to evaluate your understanding of full-stack development using your preferred stack.
-
-You’ll build a simple **TODO app** with basic task management functionality, covering both frontend and backend.
+This is a **Full-Stack TODO Application** built using **React.js** for the frontend and **Laravel** for the backend.  
+It allows users to manage their tasks efficiently with features like creating, updating, marking as done, and deleting TODOs.
 
 ---
 
-## 📦 Tech Stack Requirements
+## Features
 
-- **Frontend:** React.js
-- **Backend:** Node.js with Express.js is preferred. But you may choose your preferred backend technology.
-- **Database:** MongoDB or any other Database technologies
-
-You are free to use any UI libraries or tools that improve your productivity.
-
----
-
-## ✨ Features
-
-The app should allow users to:
-
-- ✅ **View TODOs**: Display a list of all TODO items.
-- ➕ **Create a TODO**: Add a new TODO with a title and optional description.
-- ✏️ **Edit a TODO**: Update the title and/or description.
-- ✅ **Mark as Done**: Toggle a TODO's `done` status.
-- ❌ **Delete a TODO**: Remove a TODO item from the list.
+- ✅ User login (email/password) → returns token + user
+- ✅ View TODOs
+- ✅ Create a TODO (title + optional description)
+- ✅ Edit TODO
+- ✅ Mark as Done/Undone
+- ✅ Delete TODO
+- ✅ Protected API routes using Laravel Sanctum (middleware `auth:sanctum`)
+- ✅ Clean and responsive React UI
+- ✅ Loading and error handling states
 
 ---
 
-## 🗂️ Recommended Folder Structure
+## Tech Stack
 
-You're free to organize your code as you see fit, but here's a suggested structure:
-
-```
-hiring-fullstack-todo/
-├── client/          # React frontend
-│   ├── README.md
-│   └── ...
-├── server/          # Express backend
-│   ├── README.md
-│   └── ...
-├── README.md
-```
+- **Frontend:** React.js, Fetch API for HTTP requests, CSS for styling
+- **Backend:** Laravel (PHP 8+), MySQL/SQLite
+- **Authentication:** Laravel Sanctum (token-based)
+- **Database:** MySQL or SQLite
+- **Tools:** VSCode, Postman (for API testing)
 
 ---
 
-## 🛠️ API Requirements
+## Setup Instructions
 
-Your Express backend should expose the following RESTful API endpoints:
+### Backend
 
-| Method | Endpoint                | Description                      |
-|--------|-------------------------|----------------------------------|
-| GET    | `/api/todos`            | Get all TODO items               |
-| POST   | `/api/todos`            | Create a new TODO item           |
-| PUT    | `/api/todos/:id`        | Update a TODO (title/description)|
-| PATCH  | `/api/todos/:id/done`   | Toggle the `done` status         |
-| DELETE | `/api/todos/:id`        | Delete a TODO                    |
+1. Navigate to the backend folder:
 
-### Database Model Example
+```bash
+cd server
+Install PHP dependencies: composer install
 
-```json
-{
-  "_id": "string",
-  "title": "string",
-  "description": "string (optional)",
-  "done": "boolean",
-  "createdAt": "Timestamp",
-  "updatedAt": "Timestamp"
-}
-```
+Copy .env.example to .env and configure database:
+cp .env.example .env
 
-You are encouraged to use **Mongoose** for schema modeling.
+Generate Laravel app key:
+  php artisan key:generate
 
----
+Run database migrations:
+  php artisan migrate
 
-## 🖼️ Frontend Expectations
+Start the backend server:
+ php artisan serve
+Frontend
 
-- Display all TODOs in a clean and simple UI
-- Provide a form to add new TODOs
-- Allow editing a TODO (title/description)
-- Provide a way to mark as done/undone (e.g., checkbox, button)
-- Add a delete button
-- Clearly show completed tasks (e.g., strikethrough or faded style)
+ Navigate to the frontend folder:
 
----
+cd client
 
-## ⚙️ Functional Expectations
 
-- The frontend should talk to the backend via HTTP API
-- The backend should persist TODOs in MongoDB
-- Handle loading and error states gracefully
+Install dependencies:
 
-**Bonus Points For:**
-- Form validation
-- User-friendly error messages
-- Optimistic UI updates
-- Nice touches in UX (e.g., animations, transitions)
-- Monorepo setup using an appropriate technology
+npm install
 
----
 
-## 🧾 Submission Instructions
+Start the React development server:
 
-Please follow these steps for submission:
+npm start
+# Runs on http://localhost:3000
 
-1. **Fork** this repository to your own GitHub account.
-2. Create a new branch named `develop` in your fork.
-3. Complete the assignment on the `develop` branch.
-4. Create a **Pull Request to your own fork** (`develop` → `main`).
-5. Fill out the provided **PR template**, including:
-   - Summary of what you built
-   - Solution rationale & user value
-   - A short demo video
-6. Fill [this form](https://coda.io/form/Type-B-Digital-Take-Home-assessment-submission_dU8ZJTHWnjv) to officially submit your work.
+Authentication
 
-> ⚠️ Submissions may not be considered if instructions are not followed properly
+Login: POST /api/login → returns { user, token }
 
----
+Authenticated Requests: Include the token in the Authorization header:
 
-## ⏳ Time Expectation
+Authorization: Bearer <token>
 
-This task is expected to take **6–8 hours**. Please don’t worry about making it perfect — we’re primarily looking at how you approach full-stack development and structure your solution.
 
----
+Logout: POST /api/logout → invalidates the token
 
-## ✅ Evaluation Criteria
+Middleware auth:sanctum protects all /api/todos endpoints.
 
-- Proper use of chosen stack
-- RESTful API structure and usage
-- Code readability and organization
-- Functional completeness of required features
-- Basic UX considerations
-- Ability to follow instructions and communicate clearly
+API Endpoints
+Method	Endpoint	Description
+GET	/api/todos	List all todos
+POST	/api/todos	Create a new todo
+PUT	/api/todos/:id	Update title/description
+PATCH	/api/todos/:id/done	Toggle done/undone
+DELETE	/api/todos/:id	Delete a todo
+Notes
 
----
+No role-based access control implemented; all authenticated users can manage their todos.
 
-## 📥 README & PR Template Required
+CORS must be configured if frontend runs on a different port/domain.
 
-Your submission must include:
-
-- `README.md` file for the frontend with instructions on how to set up and run the frontend app
-- `README.md` file for the backend with:
-  - How to set up and run the backend
-  - MongoDB connection notes (e.g., Atlas or local)
-  - Any assumptions or limitations
-- A completed PR template in your pull request
-
----
-
-Thank you for taking the time to complete this assignment! We’re looking forward to seeing what you build.
+Proper HTTP status codes and JSON responses are returned by the backend.
