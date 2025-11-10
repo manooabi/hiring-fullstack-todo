@@ -29,7 +29,7 @@ Route::post('/login', [AuthController::class, 'login'])->withoutMiddleware('veri
 // Route::post('/todos', [TodoController::class, 'store']);
 // Route::put('/todos/{id}', [TodoController::class, 'update']);
 // Route::patch('/todos/{id}/done', [TodoController::class, 'toggleDone']);
-// Route::delete('/todos/{id}', [TodoController::class, 'destroy']);
+// Route::delete('/todos/{id}', [TodoController::class, 'destroy']); dummy
 Route::middleware('auth:sanctum')->group(function() {
     Route::post('/logout', [AuthController::class, 'logout']); // optional logout
 
